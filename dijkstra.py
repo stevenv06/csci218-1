@@ -1,4 +1,4 @@
-"""Member 2: Dijkstra shortest-path search for a 4-connected unit-cost grid."""
+
 from dataclasses import dataclass
 from heapq import heappop, heappush
 from itertools import count
