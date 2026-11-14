@@ -57,4 +57,4 @@ For Member 4: compare both algorithms on identical world instances, several grid
 
 ## Git contribution evidence
 
-Commit your own files to the shared Git repository, with meaningful commit messages, e.g. `Add reusable grid model`, `Implement Dijkstra search`, `Add Pygame interaction`, `Add validation tests`. Don't attribute files to group members who did not actually contribute. Replace placeholders in the report and reflection with real data and screenshots after your own demonstration.
+Commit  files to the shared Git repository, with meaningful commit messages, e.g. `Add reusable grid model`, `Implement Dijkstra search`, `Add Pygame interaction`, `Add validation tests`. . 
