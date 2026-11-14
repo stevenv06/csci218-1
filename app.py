@@ -1,4 +1,4 @@
-"""Member 1: interactive Pygame UI visualizing Member 2's Dijkstra search.
+
 
 Run: python app.py. All search calculation happens separately from animation.
 """
