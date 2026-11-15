@@ -6,6 +6,7 @@ import random
 import sys
 from grid import GridWorld
 from dijkstra import SearchResult, dijkstra
+from astar import astar
 
 try:
     import pygame
@@ -38,6 +39,7 @@ def run() -> None:
     shown_explored = 0
     playback = False
     mode = 'wall'
+    algorithm = 'Dijkstra'
     held_draw: bool | None = None
 
     def invalidate() -> None:
@@ -95,8 +97,21 @@ def run() -> None:
                     mode = 'start'
                 elif key == pygame.K_3:
                     mode = 'goal'
+
+                elif key == pygame.K_4:
+                    algorithm = 'Dijkstra'
+                    invalidate()
+
+                elif key == pygame.K_5:
+                    algorithm = 'A*'
+                    invalidate()
+
                 elif key == pygame.K_SPACE:
-                    result = dijkstra(world)
+                    if algorithm == 'Dijkstra':
+                        result = dijkstra(world)
+                    else:
+                        result = astar(world)
+
                     shown_explored = 0
                     playback = True
                 elif key == pygame.K_c:
@@ -118,8 +133,8 @@ def run() -> None:
                 playback = False
 
         screen.fill(COLORS['bg'])
-        screen.blit(heading.render('Dijkstra Pathfinding Visualizer', True, COLORS['white']), (16, 13))
-        screen.blit(regular.render('1 Walls    2 Start    3 Goal    SPACE Search    R Random    C Clear    ESC Quit', True, COLORS['muted']), (16, 48))
+        screen.blit(heading.render(f'{algorithm} Pathfinding Visualizer', True, COLORS['white']), (16, 13))
+        screen.blit(regular.render('1 Walls    2 Start    3 Goal    4 Dijkstra    5 A*    SPACE Search    R Random    C Clear    ESC Quit', True, COLORS['muted']), (16, 48))
         screen.blit(regular.render(f'Edit mode: {mode.upper()}     |     Left-click or drag walls', True, COLORS['white']), (16, 76))
         explored = set(result.explored_order[:shown_explored]) if result else set()
         path = set(result.path) if result and not playback else set()
@@ -145,6 +160,11 @@ def run() -> None:
         clock.tick(FPS)
     pygame.quit()
     sys.exit(0)
+
+
+if __name__ == '__main__':
+    run()
+
 
 
 if __name__ == '__main__':
