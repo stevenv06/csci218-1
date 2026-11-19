@@ -1,12 +1,12 @@
-
+"""Member 1: interactive Pygame UI visualizing Member 3's A* search.
 
 Run: python app.py. All search calculation happens separately from animation.
 """
 import random
 import sys
 from grid import GridWorld
-from dijkstra import SearchResult, dijkstra
 from astar import astar
+from search_result import SearchResult
 
 try:
     import pygame
@@ -30,7 +30,7 @@ def run() -> None:
     world = GridWorld()
     width, height = world.cols * CELL, TOP + world.rows * CELL + BOTTOM
     screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('CSCI218 | Dijkstra Grid Pathfinding — Members 1 & 2')
+    pygame.display.set_caption('CSCI218 | A* Grid Pathfinding — Members 1 & 3')
     heading = pygame.font.SysFont('arial', 24, bold=True)
     regular = pygame.font.SysFont('arial', 16)
     small = pygame.font.SysFont('arial', 14)
@@ -39,7 +39,6 @@ def run() -> None:
     shown_explored = 0
     playback = False
     mode = 'wall'
-    algorithm = 'Dijkstra'
     held_draw: bool | None = None
 
     def invalidate() -> None:
@@ -97,21 +96,8 @@ def run() -> None:
                     mode = 'start'
                 elif key == pygame.K_3:
                     mode = 'goal'
-
-                elif key == pygame.K_4:
-                    algorithm = 'Dijkstra'
-                    invalidate()
-
-                elif key == pygame.K_5:
-                    algorithm = 'A*'
-                    invalidate()
-
                 elif key == pygame.K_SPACE:
-                    if algorithm == 'Dijkstra':
-                        result = dijkstra(world)
-                    else:
-                        result = astar(world)
-
+                    result = astar(world)
                     shown_explored = 0
                     playback = True
                 elif key == pygame.K_c:
@@ -133,8 +119,8 @@ def run() -> None:
                 playback = False
 
         screen.fill(COLORS['bg'])
-        screen.blit(heading.render(f'{algorithm} Pathfinding Visualizer', True, COLORS['white']), (16, 13))
-        screen.blit(regular.render('1 Walls    2 Start    3 Goal    4 Dijkstra    5 A*    SPACE Search    R Random    C Clear    ESC Quit', True, COLORS['muted']), (16, 48))
+        screen.blit(heading.render('A* Pathfinding Visualizer', True, COLORS['white']), (16, 13))
+        screen.blit(regular.render('1 Walls    2 Start    3 Goal    SPACE Search    R Random    C Clear    ESC Quit', True, COLORS['muted']), (16, 48))
         screen.blit(regular.render(f'Edit mode: {mode.upper()}     |     Left-click or drag walls', True, COLORS['white']), (16, 76))
         explored = set(result.explored_order[:shown_explored]) if result else set()
         path = set(result.path) if result and not playback else set()
@@ -160,11 +146,6 @@ def run() -> None:
         clock.tick(FPS)
     pygame.quit()
     sys.exit(0)
-
-
-if __name__ == '__main__':
-    run()
-
 
 
 if __name__ == '__main__':

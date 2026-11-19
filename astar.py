@@ -7,7 +7,7 @@ from math import inf
 from time import perf_counter
 
 from grid import Cell, GridWorld
-from dijkstra import SearchResult
+from search_result import SearchResult
 
 
 def heuristic(current: Cell, goal: Cell) -> float:
